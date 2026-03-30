@@ -47,6 +47,18 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude-memory/scripts/hook_subagent_write_guard.py",
+            "timeout": 3000
+          }
+        ]
+      }
     ]
   },
   "permissions": {

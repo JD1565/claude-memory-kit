@@ -58,6 +58,7 @@ if $UNINSTALL; then
     "$SCRIPTS_DIR/hook_pre_compact.py"
     "$SCRIPTS_DIR/hook_stop.py"
     "$SCRIPTS_DIR/hook_post_tool_use.py"
+    "$SCRIPTS_DIR/hook_subagent_write_guard.py"
     "$SCRIPTS_DIR/get_session_info.py"
     "$COMMANDS_DIR/save.md"
     "$COMMANDS_DIR/checkpoint.md"
@@ -163,12 +164,12 @@ info "Installing core scripts..."
 
 if $DRY_RUN; then
   dry "Would create: $SCRIPTS_DIR/"
-  for f in memory_db.py hook_session_start.py hook_pre_compact.py hook_stop.py hook_post_tool_use.py get_session_info.py; do
+  for f in memory_db.py hook_session_start.py hook_pre_compact.py hook_stop.py hook_post_tool_use.py hook_subagent_write_guard.py get_session_info.py; do
     dry "Would copy: scripts/$f -> $SCRIPTS_DIR/$f"
   done
 else
   mkdir -p "$SCRIPTS_DIR"
-  for f in memory_db.py hook_session_start.py hook_pre_compact.py hook_stop.py hook_post_tool_use.py get_session_info.py; do
+  for f in memory_db.py hook_session_start.py hook_pre_compact.py hook_stop.py hook_post_tool_use.py hook_subagent_write_guard.py get_session_info.py; do
     cp "$SCRIPT_DIR/scripts/$f" "$SCRIPTS_DIR/$f"
     ok "Installed $f"
   done
@@ -249,6 +250,18 @@ HOOKS_JSON=$(cat <<'HOOKEOF'
         {
           "type": "command",
           "command": "python3 SCRIPTS_DIR_PLACEHOLDER/hook_post_tool_use.py",
+          "timeout": 3000
+        }
+      ]
+    }
+  ],
+  "PreToolUse": [
+    {
+      "matcher": "Write|Edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "python3 SCRIPTS_DIR_PLACEHOLDER/hook_subagent_write_guard.py",
           "timeout": 3000
         }
       ]
@@ -354,7 +367,7 @@ else
   echo -e "${GREEN}Installation complete!${NC}"
   echo ""
   echo "What was installed:"
-  echo "  - 6 Python scripts in $SCRIPTS_DIR/"
+  echo "  - 7 Python scripts in $SCRIPTS_DIR/"
   echo "  - 4 slash commands in $COMMANDS_DIR/"
   echo "  - Hook registration in $SETTINGS_FILE"
   echo ""

@@ -16,6 +16,7 @@ Four lightweight hooks that fire automatically during your Claude Code sessions:
 | **PreCompact** | Before context compression | Saves a state snapshot so nothing is lost when the context window shrinks |
 | **Stop** | After each Claude response | Extracts decisions, learnings, and next steps using keyword/regex heuristics |
 | **PostToolUse** | After git commits | Tracks commit count per session |
+| **PreToolUse** | Before file writes | Blocks subagent writes outside allowed directories |
 
 Everything is stored in a local SQLite database (`~/.claude-memory/memory.db`). No LLM calls, no external services, no API costs. The hooks use a silent failure decorator so they never crash or block your session.
 
@@ -30,14 +31,14 @@ Everything is stored in a local SQLite database (`~/.claude-memory/memory.db`). 
 ## Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-memory-kit.git
+git clone https://github.com/JD1565/claude-memory-kit.git
 cd claude-memory-kit
 ./install.sh
 ```
 
 The installer will:
 1. Ask you to choose a **workspace directory** (default: `~/Claude/`)
-2. Copy 6 Python scripts to `~/.claude-memory/scripts/`
+2. Copy 7 Python scripts to `~/.claude-memory/scripts/`
 3. Install 4 slash commands to `~/.claude/commands/`
 4. Register hooks in `~/.claude/settings.local.json`
 5. Create the workspace directory with a `CLAUDE.md` conventions file
@@ -222,6 +223,7 @@ claude-memory-kit/
 │   ├── hook_pre_compact.py       # PreCompact — state snapshot
 │   ├── hook_stop.py              # Stop — decision/learning extraction
 │   ├── hook_post_tool_use.py     # PostToolUse — git commit tracking
+│   ├── hook_subagent_write_guard.py # PreToolUse — subagent write restriction
 │   └── get_session_info.py       # Helper for /save command
 ├── commands/
 │   ├── save.md                   # /save slash command

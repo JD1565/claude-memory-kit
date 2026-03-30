@@ -20,7 +20,7 @@ Before installing, you need:
 ### Step 1: Clone the kit
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-memory-kit.git
+git clone https://github.com/JD1565/claude-memory-kit.git
 cd claude-memory-kit
 ```
 
@@ -77,6 +77,7 @@ You should see no errors. The memory database (`~/.claude-memory/memory.db`) is 
     hook_pre_compact.py             # Saves state before context compression
     hook_stop.py                    # Extracts decisions and learnings
     hook_post_tool_use.py           # Tracks git commits
+    hook_subagent_write_guard.py    # Restricts subagent writes
     get_session_info.py             # Helper for /save command
 
 ~/.claude/
@@ -436,6 +437,18 @@ Four hooks run automatically. All use a silent failure decorator — they never 
 **What it does:**
 1. Quick exit if the command doesn't contain "git commit" (<50ms)
 2. If it's a git commit: increments the commit counter on the session record
+
+### PreToolUse (Subagent Write Guard)
+
+**When:** Before any Write or Edit tool call
+**Timeout:** 3 seconds
+**What it does:**
+1. Checks if the call is from a subagent (has `agent_id` in the event data)
+2. If main session: allows all writes (exit 0)
+3. If subagent: checks if the target path is inside `~/.claude/agent-memory/`
+4. If inside allowed directory: allows the write
+5. If outside: blocks with exit code 2 (hard block that overrides allow rules)
+**Fails open:** Any unexpected error allows the write rather than blocking
 
 ---
 

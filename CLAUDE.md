@@ -16,6 +16,7 @@ claude-memory-kit/
 │   ├── hook_pre_compact.py       # PreCompact — state snapshot before compression
 │   ├── hook_stop.py              # Stop — keyword-gated decision/learning extraction
 │   ├── hook_post_tool_use.py     # PostToolUse — git commit tracking
+│   ├── hook_subagent_write_guard.py # PreToolUse — restrict subagent writes
 │   └── get_session_info.py       # Helper for /save (session start time lookup)
 ├── commands/
 │   ├── save.md                   # /save — end-of-session full save
@@ -35,6 +36,7 @@ claude-memory-kit/
 - **Silent failure everywhere** — The `@_safe` decorator on all DB operations logs to stderr and returns None. Hooks never crash sessions.
 - **Workspace path stored in `~/.claude-memory/workspace`** — Commands read this file to validate location. Installer creates it.
 - **Three-tier permissions (allow/ask/deny)** — Kit ships with `acceptEdits` mode. Git push/merge/rebase prompt. Destructive ops blocked.
+- **Subagent write guard** — PreToolUse hook blocks subagent Write/Edit outside `~/.claude/agent-memory/`. Main session unrestricted. Fails open on error.
 
 ## Conventions
 
@@ -68,8 +70,6 @@ print('All tests passed')
 
 ## Not Yet Implemented
 
-- Public GitHub repo (local only, no remote yet)
-- Subagent write guard hook (hook_subagent_write_guard.py)
 - /audit and /explain commands (depend on agent definitions not included in kit)
 - Auto mode documentation for Team/Enterprise users
 - Upgrade/migration path between kit versions
