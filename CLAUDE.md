@@ -2,6 +2,47 @@
 
 Portable starter kit that gives Claude Code persistent memory across sessions. Packages the hooks, scripts, commands, and conventions needed for session continuity, decision tracking, and cross-project learning.
 
+## What This Kit Does
+
+Claude Code starts every session with a blank slate. This kit fixes that by installing four lightweight hooks that automatically:
+
+- **Remember where you left off** — session state, decisions, and learnings are stored in a local SQLite database and injected at the start of each new session
+- **Capture decisions and insights** — keyword-gated extraction picks up architecture choices and learnings from your conversations (no LLM calls, just regex)
+- **Survive context compression** — a state snapshot is saved before the context window shrinks, so nothing is lost
+- **Track git activity** — commit counts are recorded per session
+
+No external services, no API costs, no accounts to create. Everything runs locally.
+
+## Getting Started
+
+```bash
+git clone https://github.com/JD1565/claude-memory-kit.git
+cd claude-memory-kit
+./install.sh
+```
+
+The installer will:
+1. Ask you to choose a workspace directory (default: `~/Claude/`)
+2. Copy hook scripts to `~/.claude-memory/scripts/`
+3. Install slash commands (`/save`, `/checkpoint`, `/understand`, `/new-project`) to `~/.claude/commands/`
+4. Register hooks in `~/.claude/settings.local.json`
+5. Create the workspace with a parent `CLAUDE.md` that tracks all your projects
+
+After install, open your workspace in Claude Code (terminal or desktop app) and run `/new-project` to create your first project.
+
+**Requirements:** Python 3.9+, Git, Claude Code CLI or desktop app
+
+## Full Documentation
+
+- **[README.md](README.md)** — Architecture, workspace convention, permissions, FAQ
+- **[GUIDE.md](GUIDE.md)** — Step-by-step setup, usage walkthrough, troubleshooting
+
+---
+
+## Developer Reference
+
+Everything below is for contributors working on the kit itself.
+
 ## Project Structure
 
 ```
