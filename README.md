@@ -76,6 +76,15 @@ The kit expects all your projects to live under a single workspace directory. Du
 - The workspace `CLAUDE.md` gives Claude conventions that apply to all projects
 - Projects don't have to be code — research, writing, planning all work the same way
 
+### Parent-Child CLAUDE.md Inheritance
+
+Claude Code natively walks up the directory tree and loads every `CLAUDE.md` it finds. The kit uses this to create a two-level hierarchy:
+
+- **Workspace `CLAUDE.md`** (parent) — conventions that apply to all projects, plus a project registry table so Claude always knows what exists in the workspace
+- **Project `CLAUDE.md`** (child, optional) — project-specific conventions, architecture decisions, phase tracking
+
+When you start a session in `~/Claude/my-api/`, Claude loads both files. This means Claude is aware of the broader workspace context — sibling projects, shared conventions — without you having to explain it. The `/new-project` command automatically registers each new project in the parent's registry table.
+
 **Why not `~/Dev/`?** You can use `~/Dev/` if you prefer — the installer lets you choose any path. `~/Claude/` is the default because the workspace isn't limited to software development.
 
 ### The Two-Layer Documentation Pattern

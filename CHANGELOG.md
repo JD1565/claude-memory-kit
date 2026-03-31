@@ -4,7 +4,28 @@ All significant changes to this project are documented here.
 
 ---
 
-_Checkpoint [2026-03-31 09:15]: Added CLAUDE.md, CHANGELOG.md, and GUIDE.md to kit project. Three-tier permissions implemented. Workspace convention with configurable directory. Notion save pending (MCP disconnected)._
+## [2026-03-31] Session: Parent-child CLAUDE.md inheritance
+
+### Summary
+Added parent-child CLAUDE.md inheritance so the workspace root acts as an overarching project aware of all child projects. Discussed Windows compatibility, desktop app usage, and project selection — no code changes needed for those (works natively).
+
+### Changes
+- `templates/CLAUDE.md` — Added project registry table to workspace template; parent now lists all projects with description and status
+- `commands/new-project.md` — Added step 7 to auto-register new projects in the workspace CLAUDE.md registry
+- `README.md` — Documented parent-child CLAUDE.md inheritance pattern under Workspace Convention
+
+### Key Decisions
+- Workspace CLAUDE.md serves as parent project context — Claude Code's native directory-walk inheritance handles the rest
+- `/new-project` maintains the registry automatically — no manual upkeep needed
+
+### Git Commits
+- (all changes in this commit)
+
+### Next Steps
+- [ ] Test full install flow on a clean machine (including Windows/WSL)
+- [ ] Add /audit and /explain commands (requires bundling agent definitions)
+- [ ] Document auto mode upgrade path for Team/Enterprise users
+- [ ] Consider PowerShell installer or Python-based cross-platform installer for Windows
 
 ---
 

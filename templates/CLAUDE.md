@@ -1,8 +1,18 @@
 # Workspace Conventions
 
+This is the parent CLAUDE.md for the workspace. Claude Code walks up the directory tree and loads CLAUDE.md files at each level, so everything here applies to all projects below. Each project can have its own child CLAUDE.md for project-specific conventions.
+
+## Projects
+
+<!-- /new-project automatically adds entries here. Keep this section current. -->
+
+| Project | Description | Status |
+|---------|-------------|--------|
+| _(none yet — use `/new-project` to create your first)_ | | |
+
 ## Workspace Structure
 
-All projects live under `~/Claude/` (or whichever workspace you chose during install). Each project is its own git repository with standardized documentation.
+All projects live under this workspace directory. Each project is its own git repository with standardized documentation.
 
 ```
 ~/Claude/                     # Workspace root (this CLAUDE.md lives here)

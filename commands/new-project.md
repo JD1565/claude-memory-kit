@@ -122,7 +122,21 @@ Default to private. If the user wants public, they'll say so.
 
 ---
 
-### 7. Save to memory DB
+### 7. Register in workspace CLAUDE.md
+
+Update the workspace root CLAUDE.md to list this project. Read the file at `$WORKSPACE/CLAUDE.md` and find the `## Projects` table. If the placeholder row `_(none yet...` exists, replace it. Otherwise append a new row.
+
+Add a row with the project name, the brief description from step 2, and status "Active":
+
+```
+| project-name | Brief description | Active |
+```
+
+This keeps the parent CLAUDE.md aware of all child projects, so Claude has workspace-wide context when working in any project.
+
+---
+
+### 8. Save to memory DB
 
 ```
 python3 -c "
@@ -136,7 +150,7 @@ conn.close()
 
 ---
 
-### 8. Confirm
+### 9. Confirm
 
 Show me:
 - Project location
