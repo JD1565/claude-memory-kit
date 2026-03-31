@@ -108,17 +108,25 @@ git commit -m "Initial project setup"
 
 ---
 
-### 6. Create GitHub remote (optional)
+### 6. Create GitHub remote
 
-Check if `gh` CLI is available. If so:
+Each project gets its own private GitHub repository. Check if `gh` CLI is available and authenticated:
 
 ```bash
-gh repo create $GITHUB_USERNAME/$PROJECT_NAME --private --source . --remote origin --push
+gh auth status
 ```
 
-If `gh` is not installed or the user declines, skip this step and note that no remote was created.
+If `gh` is available and authenticated, create the remote:
 
-Default to private. If the user wants public, they'll say so.
+```bash
+gh repo create $PROJECT_NAME --private --source . --remote origin --push
+```
+
+This creates a private repo under the authenticated user's account (no need to specify username).
+
+If `gh` is not installed or not authenticated, skip this step and warn: "No GitHub remote created — install and authenticate `gh` CLI to enable automatic repo creation."
+
+**Default is always private.** Only make public if the user explicitly asks.
 
 ---
 
