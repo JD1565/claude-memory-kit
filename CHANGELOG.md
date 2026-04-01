@@ -4,6 +4,29 @@ All significant changes to this project are documented here.
 
 ---
 
+## [2026-04-01] Session: User-facing docs and GitHub convention
+
+### Summary
+Added user-facing instruction set to CLAUDE.md so anyone browsing the repo on GitHub or opening it in Claude Code immediately understands what the kit does and how to install it. Clarified that /new-project creates private GitHub repos by default, matching the existing development workflow. Updated Notion project page with GitHub repository convention.
+
+### Changes
+- `CLAUDE.md` — Added user-facing section (what it does, getting started, full docs links) above existing developer reference
+- `commands/new-project.md` — Tightened GitHub repo creation: private by default, removed ambiguous username variable, made gh CLI expected rather than optional
+- Notion page "Claude Memory Kit — Public on GitHub" updated with GitHub repository convention section
+
+### Git Commits
+- `10db882` — Add parent-child CLAUDE.md inheritance with project registry
+- `6e9ef22` — Add user-facing instructions to CLAUDE.md
+- `b05bafc` — Clarify private-by-default GitHub repo creation in /new-project
+
+### Next Steps
+- [ ] Test full install flow on a clean machine (including Windows/WSL)
+- [ ] Add /audit and /explain commands (requires bundling agent definitions)
+- [ ] Document auto mode upgrade path for Team/Enterprise users
+- [ ] Consider cross-platform installer for Windows
+
+---
+
 ## [2026-03-31] Session: Parent-child CLAUDE.md inheritance
 
 ### Summary
